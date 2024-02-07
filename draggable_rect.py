@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QGraphicsRectItem, QApplication
 from PyQt5.QtGui import QBrush
 from PyQt5.QtCore import Qt, QPointF, QRectF
 
-from utils.colors import get_random_color
+from utils.colors import get_random_color, get_select_gradient
 from utils.constants import RECT_SHORT_SIDE_LENGTH
 
 
@@ -17,6 +17,7 @@ class DraggableRect(QGraphicsRectItem):
         self.setFlag(QGraphicsRectItem.ItemSendsGeometryChanges)
         self.setAcceptHoverEvents(True)
         self.connections = {}
+        self.brush_to_switch = get_select_gradient(self.rect())
 
     def itemChange(self, change, value):
         if change == QGraphicsRectItem.ItemPositionChange:
@@ -50,7 +51,7 @@ class DraggableRect(QGraphicsRectItem):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.setOpacity(0.7)
+            self.setOpacity(0.9)
         super(DraggableRect, self).mousePressEvent(event)
 
     def mouseReleaseEvent(self, event):
@@ -60,3 +61,8 @@ class DraggableRect(QGraphicsRectItem):
 
     def remove_connection(self, rect_remove_connection_with):
         del self.connections[rect_remove_connection_with]
+
+    def trigger_rect_selection(self):
+        tmp = self.brush()
+        self.setBrush(self.brush_to_switch)
+        self.brush_to_switch = tmp
