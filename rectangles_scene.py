@@ -47,7 +47,6 @@ class RectanglesScene(QGraphicsScene):
         self.addItem(rect)
 
     def mousePressEvent(self, event):
-        print(self.views())
         # self.views()[0] as view supposed to be the only one, change and compare with MainView to get the right one
         item = self.itemAt(event.scenePos(), self.views()[0].transform())
         if isinstance(item, DraggableRect):
