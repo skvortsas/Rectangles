@@ -12,6 +12,7 @@ class ConnectionLine(QGraphicsLineItem):
         self.rect2 = rect2
         self.update_position()
         self.setPen(QPen(Qt.black, 8))
+        self.setZValue(1)
 
     def update_position(self):
         self.setLine(QLineF(self.rect1.mapToScene(self.rect1.rect().center()),
